@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物界面</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/address.css">
+    <script type="application/x-javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="application/x-javascript" src="js/bootstrap.js"></script>
+    <script type="application/x-javascript" src="js/bootstrap-waterfall.js"></script>
+    <style>
+        body {
+            background-color: rgb(236, 236, 236);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .goodsImg {
+            height: 200px;
+            width: 200px;
+        }
+        
+        .TagGoods {
+            height: 730px;
+        }
+        
+        .col-md-3 {
+            padding: 3px;
+        }
+        
+        div.goodsBox :hover {
+            border: 2px solid salmon;
+        }
+        
+        .bankuaiHeader>span {
+            padding: 4px;
+            background-color: rgb(77, 177, 64);
+            font-size: 22px;
+            font-weight: bolder;
+            color: white;
+            border-top: 4px #000 solid;
+            border-bottom-right-radius: 9px;
+            border-bottom-left-radius: 9px;
+        }
+        
+        .thumbnail {
+            margin: 0;
+            border-bottom-right-radius: 28px;
+            border-bottom-left-radius: 28px;
+        }
+        
+        .caption {
+            text-align: center;
+        }
+        
+        .goodsName {
+            margin: 0 auto;
+            width: 200px;
+            height: 40px;
+        }
+        
+        .caption :nth-child(2) {
+            font-size: 20px;
+            color: red;
+        }
+        
+        .btn {
+            border-bottom-right-radius: 18px;
+        }
+        
+        .navbar {
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 18px;
+            padding: 6px;
+            padding-right: 20px;
+            margin: auto;
+            width: 60%;
+        }
+        
+        .imgBox {
+            width: 230px;
+            height: 230px;
+            margin: 0 auto;
+        }
+        
+        .imgs {
+            border-radius: 5px;
+            border-bottom-right-radius: 18px;
+            width: 230px;
+            height: 230px;
+        }
+        
+        .textBox {
+            width: 400px;
+            height: 330px;
+            float: right;
+        }
+        
+        #salePrice {
+            color: red;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+        #goodsStockAndSale {
+            color: rgb(133, 133, 133);
+        }
+        
+        #goodsName {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .shopcarImgs {
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+
+                <!-- 导航栏 -->
+                <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                             <span class="sr-only">Toggle navigation</span>
+                             <span class="icon-bar"></span>
+                             <span class="icon-bar"></span>
+                             <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">好哥哥商城</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <li>
+                                <a id="Shopcar">购物车</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="userName">用户名</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a id="checkAddress" href="#modal-container-900" data-toggle="modal">收货地址</a>
+                                    </li>
+                                    <li>
+                                        <a id="checkUserOrder" href="#modal-container-985" data-toggle="modal">订单</a>
+                                    </li>
+                                    <li>
+                                        <a id="checkBuyMsg" href="#modal-container-985" data-toggle="modal">查看购买记录</a>
+                                    </li>
+                                    <!-- <li>
+                                        <a href="#">编辑资料</a>
+                                    </li> -->
+                                    <li class="divider">
+                                    </li>
+                                    <li>
+                                        <a id="logout">登出</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <!-- 导航栏 end-->
+                <!-- 商品内容 -->
+                <!--好哥哥超市板块-->
+                <div style="margin-top: 100px;" class="row TagGoods chaoshi">
+                    <div class="bankuaiHeader">
+                        <span>好哥哥超市 || haogegesupermarket</span>
+                        <button class="btn btn-default reloadchaoshi" style="float: right;">换一批</button>
+                        <div id="blackXian" style="margin-top: 5px; height: 4px; background-color: black;"></div>
+                    </div>
+                    <div class="bankuaiBody">
+                        歪比歪比
+                    </div>
+                </div>
+                <!--好哥哥超市板块 end-->
+                <!-- 好哥哥国际板块-->
+                <!-- <div class="row TagGoods guoji">
+                    <div class="bankuaiHeader">
+                        <span style="background-color: rgb(122, 70, 230);">好哥哥国际 || haogege.HK</span>
+                        <div id="blackXian" style="height: 4px; background-color: black;"></div>
+                    </div>
+                    <div class="bankuaiBody">
+                        <div class="col-md-3 ">
+                            <div class="thumbnail">
+                                <img alt="300x200" src="img/goodsImg/a43b591a9d16fdfac36280afa38f8c5495ee7bbe.jpg" />
+                                <div class="caption">
+                                    <div class="goodsName">
+                                        <span>旺旺碎冰冰</span>
+                                    </div>
+                                    <span>￥99.99</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!--好哥哥国际板块 end-->
+                <!--美丽人生-->
+                <!-- <div class="row TagGoods meili">
+                    <div class="bankuaiHeader">
+                        <span style="background-color: rgb(122, 70, 230);">美丽人生 || meimei</span>
+                        <div id="blackXian" style="height: 4px; background-color: black;"></div>
+                    </div>
+                    <div class="bankuaiBody">
+                    </div>
+                </div> -->
+                <!--美丽人生 end-->
+                <!--潮电酷玩-->
+                <!-- <div class="row TagGoods kuwan">
+                    <div class="bankuaiHeader">
+                        <span style="background-color: rgb(122, 70, 230);">潮电酷玩 || 潮电酷玩</span>
+                        <div id="blackXian" style="height: 4px; background-color: black;"></div>
+                    </div>
+                    <div class="bankuaiBody">
+                    </div>
+                </div> -->
+                <!--潮电酷玩 end -->
+
+                <!--一般商品-->
+                <div class="row  yiban">
+                    <div class="bankuaiHeader">
+                        <span style="margin: 0 auto; background-color: rgb(122, 70, 230);">--猜你喜欢--</span>
+                        <div id="blackXian" style="height: 4px; background-color: black;"></div>
+                    </div>
+                    <div class="bankuaiBody">
+                    </div>
+                </div>
+                <!--一般商品 end-->
+                <!--详细商品-->
+                <a id="modal-553377" href="#modal-container-553377" role="button" class="btn" data-toggle="modal" style="display: none;">商品详细信息遮罩窗体</a>
+                <div class="modal fade" id="modal-container-553377" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width: 120%;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+                            </div>
+                            <div class="modal-body" style="height: 400px;">
+                                <img class="imgs" src="img/goodsImg/19596eda380aaf0f.jpg" alt="暂无">
+                                <div class="textBox">
+                                    <p id="goodsid" style="display: none;">9999</p>
+                                    <p id="goodsName">商品名Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam.</p>
+                                    <span id="salePrice">￥99.99</span>
+                                    <span id="goodsStockAndSale">剩余库存:999 || 积累销量:999</span>
+                                    <div style="width: 30%; border-top: #000 solid 2px;"></div>
+                                    <p id="goodsEx">
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non hic corrupti rerum nobis voluptatem ducimus fugit dignissimos, ab nesciunt ut modi minima, sequi quia beatae sint accusantium cupiditate laudantium in sunt dolores? Dolorum quo similique veritatis
+                                        esse numquam est quod vel id accusantium asperiores accusamus mollitia quam magnam modi voluptatem, recusandae alias corrupti vitae vero reprehenderit non distinctio perferendis sint? Maiores aliquid molestias vel
+                                        quae quam atque voluptatibus eaque facere ad est dolore a ea at tempore repellendus odio incidunt sequi, accusantium, esse amet harum quas laudantium? Sit ipsum quibusdam tempora nisi dolore! Aut inventore nulla
+                                        consequuntur voluptas, illo rerum!
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <ul class="pagination" style="float: left; margin: 0;">
+                                    <li>
+                                        <a class="minus">-</a>
+                                    </li>
+                                    <li>
+                                        <a id="number">0</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="plus">+</a>
+                                    </li>
+                                </ul>
+                                <button type="button" class="btn btn-success" onclick="goBuyNow()">立即购买</button>
+                                <button type="button" class="btn btn-primary" onclick="addShopcar()" style="float: left;">加入购物车</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--详细商品 end-->
+
+
+                <!-- 查看购买记录 -->
+                <div class="modal fade" id="modal-container-985" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">
+                                    消费记录表
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- 查看购买记录 end -->
+
+                <!-- 结算界面 -->
+                <a id="modal-415225" href="#modal-container-415225" role="button" class="btn" data-toggle="modal" style="display: none;">直接购买遮罩窗体</a>
+                <div class="modal fade" id="modal-container-415225" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    结算界面
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <p style="font-weight: bold;
+                                font-size: 18px;">商品名</p>
+                                <span style="color: red;
+                                font-size: 22px;
+                                font-weight: bold;">￥12</span>
+                                <span style="color: rgb(133, 133, 133);">剩余库存:76 || 积累销量:0</span>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">输入购买数量</label>
+                                    <input type="number" class="form-control" id="buyNum" />
+                                </div>
+                                <address id="addressForJustBuy" style="height: 72px; background-color: #f3f3f3;">
+                                    选择收货地址
+                                </address>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success goBuyNowYes" onclick="goBuyNowYes()">确认购买</button>
+                                <button type="button" class="btn btn-success shopcarBuyNow" onclick="shopcarBuyNow()">确认购买</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- 结算界面 end -->
+                <!-- 加入购物车 -->
+                <div class="modal fade" id="modal-container-448" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    添加进入购物车
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <h4>购买的商品名::<b class="shopGoodsName">歪比歪比</b></h4>
+                                <h5>售价::<b class="shopGoodsPrice">9999</b></h5>
+                                <h6>剩余库存::<b class="shopGoodsStock">999</b></h6>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">输入购买数量</label>
+                                    <input type="number" class="form-control buyNum" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="addShopCar()">确认添加</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- 加入购物车 end -->
+                <!-- 购物车 -->
+                <a id="modal-456" href="#modal-container-456" role="button" class="btn" data-toggle="modal" style="display: none;">购物车遮罩窗体</a>
+                <div class="modal fade" id="modal-container-456" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    查看购物车
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table" id="shopcarTable">
+                                    <thead>
+                                        <tr class="success">
+                                            <th>
+                                            </th>
+                                            <th>
+                                            </th>
+                                            <th>
+                                            </th>
+                                            <th>售价
+                                            </th>
+                                            <th>数量
+                                            </th>
+                                            <th>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" onclick="shopcarGoBuy()">前往结算</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- 购物车 end -->
+                <!-- 收货地址 -->
+                <a id="modal-900" href="#modal-container-900" role="button" class="btn" data-toggle="modal" style="display: none;">收货地址遮罩窗体</a>
+                <div class="modal fade" id="modal-container-900" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    我的收货地址
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-condensed table-hover" id="userAddress">
+                                    <thead>
+                                        <tr>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>0</td>
+                                            <td>
+                                                <address class='addressMsg'>
+                                                    <strong style="font-size: 23px;" class="addressMan">ningning</strong>
+                                                    <strong style="font-size: 18px; color: #5e5e5e;" class="phone">17377555423</strong>                              
+                                                    <p class='area'>广西壮族自治区北海市海城区西街街道</p>
+                                                    <p class="address">3434</p>                      
+                                                </address>
+                                            </td>
+                                            <td>学校</td>
+                                            <td><button id="changeAddress" class="btn btn-primary" href="#modal-container-901" data-toggle="modal">编辑</button></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" href="#modal-container-901" data-toggle="modal" id="addAddress">添加新地址</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 收货地址 end -->
+                <!-- 添加/修改收货地址 -->
+                <div class="modal fade" id="modal-container-901" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    添加收货地址
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>收件人</label>
+                                    <input type="text" class="form-control" id="addressMan" placeholder="请输入真实姓名" />
+                                </div>
+                                <div class="form-group">
+                                    <label>电话号码</label>
+                                    <input type="phone" class="form-control" id="addressPhone" placeholder="请输入真实电话号码" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">选择地区</label>
+                                    <div class="areaChoose">
+                                        <div class="area-entrance" id="area-entrance">
+                                            <div class="area-header">
+                                                <span class="area-header-tips"><label>地址信息:</label></span>
+                                                <div class="area-header-click"><span class="area-header-click-input">
+                                        <span class="placeholder">请选择省/市/区/街道</span></span>
+                                                    <span class="area-header-click-icon"></span>
+                                                </div>
+                                            </div>
+                                            <div class="area-box">
+                                                <div class="area-box-title">
+                                                    <ul>
+                                                        <li>省</li>
+                                                        <li>市</li>
+                                                        <li>区</li>
+                                                        <li>街道</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="area-box-content">
+                                                    <div class="area-box-content-panel">
+                                                        <ul class="area-box-content-list">
+                                                        </ul>
+                                                    </div>
+                                                    <div class="area-box-content-panel">
+                                                        <ul class="area-box-content-list">
+                                                        </ul>
+                                                    </div>
+                                                    <div class="area-box-content-panel">
+                                                        <ul class="area-box-content-list">
+                                                        </ul>
+                                                    </div>
+                                                    <div class="area-box-content-panel">
+                                                        <ul class="area-box-content-list">
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>详细地址</label>
+                                    <input type="text" class="form-control" id="addressAddress" />
+                                </div>
+                                <div>
+                                    <label><input type="radio" name="tag" value="家"/>家</label>
+                                    <label><input type="radio" name="tag" value="公司"/>公司</label>
+                                    <label><input type="radio" name="tag" value="学校"/>学校</label>
+                                </div>
+                                <span id="msg" style="color: red;">*</span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="ok">确定</button>
+                                <button type="button" class="btn btn-primary" id="goChangeAddress" data-dismiss="modal">提交修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 添加/修改收货地址 end -->
+            </div>
+        </div>
+</body>
+<script src="js/pcas-code.js"></script>
+<!--商品显示和购买-->
+<script src="js/shopJS1.js"></script>
+<!--订单和购物记录-->
+<script src="js/shopJS2.js"></script>
+<script src="js/shopAddress.js"></script>
+
+
+</html>

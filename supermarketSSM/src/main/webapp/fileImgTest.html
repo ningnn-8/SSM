@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="application/x-javascript" src="js/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+    <form>
+        选择文件：<input type="file" name="upload_file" id="upload_file" /><br>
+        <br>
+        <button type="button" id="btn2">上传</button>
+    </form>
+    <img />
+</body>
+<script type="text/javascript">
+    $('#upload_file').on('input', () => {
+        console.log($('#upload_file')[0].files[0]);
+        var windowURL = window.URL || window.webkitURL;
+        var dataURL = windowURL.createObjectURL($('#upload_file')[0].files[0]);
+        $('img').attr('src', dataURL)
+    })
+</script>
+
+</html>

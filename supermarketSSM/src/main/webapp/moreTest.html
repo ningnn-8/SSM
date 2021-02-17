@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <script type="application/x-javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="application/x-javascript" src="js/bootstrap.js"></script>
+    <style>
+        .modal-body-left {
+            width: 48%;
+            display: inline-block;
+            border: 2px solid #bcf;
+            margin: 5px;
+        }
+        
+        .modal-body-right {
+            width: 48%;
+            display: inline-block;
+            float: right;
+            border: 2px solid #bcf;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="modal-dialog" style="width: 60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    添加商品
+                </h4>
+            </div>
+            <div class="modal-body-left">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">商品名称<b style="color: red;">*必填</b></label>
+                    <input type="text" class="form-control" id="inputGoodsName" />
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">库存<b style="color: red;">*必填</b></label>
+                    <input type="number" class="form-control" id="inputGoodsStock" />
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">售价</label>
+                    <input type="number" class="form-control" id="inputGoodsPrice" />
+                </div>
+
+
+            </div>
+            <div class="modal-body-right">
+                <div class="form-group">
+                    <form>
+                        选择文件：<input type="file" name="upload_file" id="upload_file" /><br>
+                        <br>
+                    </form>
+                    <img />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭/取消</button>
+                <button id="addGoods" type="button" class="btn  btn-primary" data-dismiss="modal">确认添加</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    $("#go").click(function() {
+        $.ajax({
+            url: "/supermarketSSM/test",
+            type: "post",
+            success: function(data) {
+                alert(data)
+            },
+            error: function() {
+                alert("真不行！")
+            }
+        })
+    })
+</script>
+
+</html>

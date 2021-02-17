@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <script type="application/x-javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <script type="application/x-javascript" src="../js/bootstrap.js"></script>
+    <!--支持响应式布局 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-size: 20px;
+            font-weight: 550;
+            background-color: #f3f3f3;
+        }
+        
+        th {
+            height: 45px;
+        }
+        
+        td {
+            height: 77px;
+        }
+        /* 封面图大小 */
+        
+        .imgs {
+            width: 60px;
+            height: 60px;
+        }
+        /* 添加商品样式 */
+        
+        .modal-body-left {
+            width: 40%;
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        .modal-body-right {
+            width: 48%;
+            display: inline-block;
+            float: right;
+            margin: 5px;
+        }
+        
+        #imgBox {
+            width: 230px;
+            height: 200px;
+        }
+        /* 添加商品样式 end */
+        
+        .saleContent>p {
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 新布局  -->
+    <hr>
+    <hr>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="tabbable" id="tabs-14387">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#panel-222325" data-toggle="tab" id="checkGoods">查看商品</a>
+                        </li>
+                        <li>
+                            <a href="#panel-491861" data-toggle="tab" id="checkOrder">查看进货</a>
+                        </li>
+                        <li>
+                            <a href="#panel-82" data-toggle="tab" id="checkSale">查看销售记录</a>
+                        </li>
+                        <li>
+                            <a href="#panel-86" data-toggle="tab" id="checkUser" style="display: none;">查看系统用户</a>
+                        </li>
+                        <li style="float: right;">
+                            <span class="welcome">欢迎：</span><b id="userName">歪比歪比</b>&nbsp;
+                            <button type="button" class="btn btn-xs btn-warning" id="logout">登出</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="background-color: #faf4e8; border: solid 3px #bcf;  height: 900px; padding: 6px; border-bottom-right-radius: 18px;">
+                        <!-- 商品 -->
+                        <div class="tab-pane active" id="panel-222325">
+                            排列方式
+                            <select name="sortoption" id="sortoption" onchange="sortOptionFunc()">
+                                <option  value="">默认</option>
+                                <option  value="priceUp">按售价升序</option>
+                                <option  value="priceDown">按售价降序</option>
+                                <option  value="stockUp">按库存升序</option>
+                                <option  value="stockDown">按库存降序</option>
+                                <option  value="saleUp">按销量升序</option>
+                                <option  value="saleDown">按销量降序</option>
+                            </select>
+                            <div style="float: right; padding-right: 16px;">
+                                <input type="text" name="tiaojian" id="tiaojian" style="font-size: 22px;" placeholder="查询条件">
+                                <input type="button" name="searchBTN" id="searchBTN" value="提交条件信息">
+                            </div>
+                            <table class="table table-bordered table-hover" id="table">
+                                <thead>
+                                    <tr>
+
+                                        <th>商品名</th>
+                                        <th>售价</th>
+                                        <th>库存</th>
+                                        <th>销量</th>
+                                        <th>销售板块</th>
+                                        <th>详细描述</th>
+                                        <th>封面图</th>
+                                        <th>是否在售</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input name="chooseOneGoods" type="checkbox"></td>
+                                        <td>旺旺仙贝</td>
+                                        <td>1.5</td>
+                                        <td>20</td>
+                                        <td>26</td>
+                                        <td><img class="imgs" src="" alt="暂无"></td>
+                                        <td>是</td>
+                                        <td><button class="btn btn-default" id="change" href="#modal-container-9387" data-toggle="modal">修改</button>
+                                            <button class="btn btn-default del">删除</button>
+                                            <button class="btn btn-default " href="#modal-container-9009" data-toggle="modal" onclick="coverUpload(this)">上传封面图</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <ul class="pagination" style="float: right;">
+                                <li>
+                                    <a id="addGoods" href="#modal-container-9387" data-toggle="modal">添加商品</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="page_up()">上一页</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="page_down()">下一页</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 订单 -->
+                        <div class="tab-pane" id="panel-491861">
+                            排列方式
+                            <select name="sortoptionO" id="sortoptionO" onchange="sortOptionOFunc()">
+                                <option  value="">默认</option>
+                                <option  value="numUp">按数量升序</option>
+                                <option  value="numDown">按数量降序</option>
+                                <option  value="inPriceUp">按进货价升序</option>
+                                <option  value="inPriceDown">按进货价降序</option>
+                                <option  value="timeUp">按时间升序</option>
+                                <option  value="timeDown">按时间降序</option>
+                            </select>
+                            <div style="float: right; padding-right: 16px;">
+                                <input type="text" name="tiaojianO" id="tiaojianO" style="font-size: 22px;" placeholder="查询条件">
+                                <input type="button" name="searchBTNO" id="searchBTNO" value="提交条件信息">
+                            </div>
+                            <table class="table table-bordered table-hover" id="orderTable">
+                                <thead>
+                                    <tr>
+                                        <th><input name="chooseAllOrder" type="checkbox"></th>
+                                        <th>商品名</th>
+                                        <th>数量</th>
+                                        <th>进货价</th>
+                                        <th>时间</th>
+                                        <th>供应商</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            <ul class="pagination" style="float: right;">
+                                <li>
+                                    <a id="modal-938748" href="#modal-container-938748" data-toggle="modal">添加订单</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="page_up_order()">上一页</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="page_down_order()">下一页</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 订单 end -->
+                        <!-- 销售 -->
+                        <div class="tab-pane" id="panel-82">
+                            <!--订单表-->
+                            <select id="saleOption" onchange="saleOptionFunc()">
+                                <option  value="待发货">待发货</option>
+                                <option  value="待收货">待收货</option>
+                                <option  value="已收货">已收货</option>
+                            </select>
+                            <table class="table table-bordered table-hover" id="orderTable">
+                                <thead>
+                                    <tr>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="saleContent">
+                                            <div class="col-md-6">
+                                                <div class="panel panel-warning">
+                                                    <div class="panel-heading">
+                                                        <a class="panel-title" data-toggle="collapse" data-parent="#panel-686403" href="#wdnmd32">订单Collapsible Group Item #1</a>
+                                                    </div>
+                                                    <div id="wdnmd32" class="panel-collapse in">
+                                                        <div class="panel-body">
+                                                            <span>下单时间：2020-02-30</span>
+                                                            <span>快递单号：2020-02-30</span>
+                                                            <p>收货地址：2020-02-30</p>
+                                                            <button type="button" class="btn btn-default btn-warning active">待发货</button>
+                                                            <button class="btn btn-success " onclick="">取消订单</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="panel panel-warning">
+                                                    <div class="panel-heading"><a class="panel-title" data-toggle="collapse" data-parent="#panel-686403" href="#4882e053-608b-11eb-a535-40b03452ffe1">待处理订单1</a></div>
+                                                    <div id="4882e053-608b-11eb-a535-40b03452ffe1" class="panel-collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="col-md-4">
+                                                                <div class="thumbnail"><img class="123sdxcee45yh" alt="300x200" src="/supermarketSSM/img/goodsImg/cb90852427f13cd1.jpg">
+                                                                    <div class="caption"><span style="color: red;font-weight: bold;font-size: 16px;">￥258   </span><span style="color: black;font-weight: bold;font-size: 10px;">   购买1件</span></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="thumbnail"><img class="th567mhj" alt="300x200" src="/supermarketSSM/img/goodsImg/bd997782cce1c80a.jpg">
+                                                                    <div class="caption"><span style="color: red;font-weight: bold;font-size: 16px;">￥208   </span><span style="color: black;font-weight: bold;font-size: 10px;">   购买1件</span></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-footer"><span>下单时间：2021-01-27 18:34:33.0</span><span>快递单号：暂无</span>
+                                                            <p class="c7af0114-608a-11eb-a535-40b03452ffe1">收件人:ad明联系电话:17862338922
+                                                                <p>地址：天津市市辖区河北区铁东路街道::3楼</p>
+                                                            </p>
+                                                            <p class="address"></p><button type="button" class="btn btn-default btn-warning active">待发货</button><button id="4882e053-608b-11eb-a535-40b03452ffe1" class="btn btn-success " onclick="delSale(this)">取消订单</button></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <ul class="pagination" style="float: right;">
+                                <li>
+                                    <a href="#" onclick="page_up_Sale()">上一页</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="page_down_Sale()">下一页</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 销售 end -->
+                        <!-- 查看用户 -->
+                        <div class="tab-pane" id="panel-86" style="width: 60%; margin: auto;">
+                            <table class="table table-bordered table-hover" id="userTable">
+                                <thead>
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>角色</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            <ul class="pagination" style="float: right;">
+                                <li>
+                                    <a href="#" onclick="page_up_user()">上一页</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="page_down_user()">下一页</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 查看用户 end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <hr>
+    <hr>
+    <!-- 新布局 end -->
+    <!--发货弹出框-->
+    <a id="modal-599488" href="#modal-container-599488" role="button" class="btn" data-toggle="modal" style="display: none;">发货触发遮罩窗体</a>
+
+    <div class="modal fade" id="modal-container-599488" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        订单发货
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary" id="gofahuo">提交</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!--发货弹出 end-->
+
+
+    <!--添加/修改商品弹出框-->
+    <div class="modal fade" id="modal-container-9387" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 60%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        添加商品
+                    </h4>
+                </div>
+                <div id="modal-body-main">
+                    <div class="modal-body-left">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">商品名称<b style="color: red;">*必填</b></label>
+                            <input type="text" class="form-control" id="inputGoodsName" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">库存</label>
+                            <input type="number" class="form-control" id="inputGoodsStock" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">售价</label>
+                            <input type="number" class="form-control" id="inputGoodsPrice" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">商品板块</label>
+                            <select id="tag">
+                            <option value="一般">一般</option>
+                            <option value="好哥哥超市">好哥哥超市</option>
+
+                        </select>
+                        </div>
+                    </div>
+                    <div class="modal-body-right">
+                        <div class="form-group">
+                            <form>
+                                选择文件<b style="color: red;">*必填</b><span style="font-size: 15px; color: #838383;">建议选择230×200像素的图片</span>：<input type="file" name="upload_file" id="upload_file" />
+                            </form>
+                            <span style="font-size: 15px; color: #838383;">图片预览:</span>
+                            <img id="imgYulan" style="width: 230px; height: 200px; border: 2px solid #000; border-radius: 2px;" />
+                        </div>
+                    </div>
+                    <div style="margin: 5px;">
+                        <label for="exampleInputEmail1">商品描述</label><br>
+                        <textarea cols="70" rows="5" placeholder="描述最多255字" style="resize:none;font-size: 16px;" id="inputGoodsExpatiate"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="goChangeGoods" type="button" class="btn  btn-primary">确认修改</button>
+                    <button id="goAddGoods" type="button" class="btn  btn-primary">确认添加</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- 添加/修改商品弹出框 end -->
+
+    <!--上传封面图弹出框-->
+    <div class="modal fade" id="modal-container-9009" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title uploadCoverGoods" id="myModalLabel">
+                        封面图上传 plus
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        选择文件：<input type="file" name="upload_file" id="upload_file" accept="image/png,image/jpeg" /><br>
+                        <br>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭/取消</button>
+                    <button type="button" id="goUploadCover" data-dismiss="modal" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- 上传封面图弹出框 end -->
+
+    <!-- 添加订单弹出框 -->
+    <div class="modal fade" id="modal-container-938748" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 class="modal-title" id="myModalLabel">
+                        添加订单<b style="color: red;">*提交后无法修改,请认真确认数据</b>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">商品名称<b style="color: red; ">*必填</b></label>
+                        <input type="text" class="form-control" id="inputOrderGoodsName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">进货数量<b style="color: red;">*必填</b></label>
+                        <input type="number" class="form-control" id="inputOrderGoodsNum" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">进货价<b style="color: red;">*必填</b></label>
+                        <input type="number" class="form-control" id="inputOrderGoodsInPrice" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">进货时间<b style="color: red;">*必填</b></label>
+                        <input type="text" class="form-control form_datetime" id="inputOrderTime" placeholder="格式：YYY-MM-DD" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">供应商<b style="color: red;">*必填</b></label>
+                        <input type="text" class="form-control" id="inputOrderSupply" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="addOrder">确定添加</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- 添加订单弹出框 end -->
+    <!-- 修改用户 -->
+    <div class="modal fade" id="modal-container-9547" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabelUser">
+
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <select name="jiaoseOP" id="jiaoseOP">
+                        <option value="1">普通用户</option>
+                        <option value="2">店员</option>
+                        <option value="3">店长</option>
+                        <option value="4">管理员</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="goChangeUser">提交</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!--修改用户 end-->
+</body>
+<!-- 商品js -->
+<script src="../js/indexGoodsJS.js"></script>
+<!-- 查看商品js end -->
+
+<!-- 订单js -->
+<script src="../js/indexDingDanJS.js"></script>
+<!-- 订单js end -->
+<!-- 销售js -->
+<script src="../js/indexSaleJS.js"></script>
+<!-- 销售js end -->
+
+
+<!-- 用户js -->
+<script>
+    $("#checkUser").click(
+        function() {
+            _imit = 0;
+            _pageitem = 8;
+            _page = 1
+            getUser(_imit, _pageitem)
+            console.log("user表初始化" + _page)
+        }
+    )
+
+    function getUser(limit, pageItem) {
+        var result;
+        $.ajax({
+            url: "/supermarketSSM/getUserToIndex.do",
+            data: page = {
+                tiaojian: $("#tiaojianU").val(),
+                limit: limit,
+                pageItem: pageItem,
+            },
+            type: "POST",
+            dataType: "json",
+            //设置为同步 不然return不到值
+            async: false,
+            success: function(data) {
+                //清空表格
+                $("#userTable  tr:not(:first)").html("");
+                $.each(data.list,
+                    function(index, obj) {
+                        var caozuo =
+                            "<button class='btn btn-default' onclick='changeUser(this)' href='#modal-container-9547' data-toggle='modal'>修改</button>" +
+                            "<button class='btn btn-default del' onclick='delUser(this)'>删除</button>"
+                        jiaose = ""
+                        if (obj.jiaoseid == 1) {
+                            jiaose = "普通用户"
+                        } else if (obj.jiaoseid == 2) {
+                            jiaose = "店员"
+                        } else if (obj.jiaoseid == 3) {
+                            jiaose = "店长"
+                        } else if (obj.jiaoseid == 4) {
+                            jiaose = "管理员"
+                        }
+                        td = "<td class='userId' style='display:none'>" + obj.uid + "</td>" +
+                            "<td>" + obj.username + "</td>" +
+                            "<td>" + jiaose + "</td>" +
+                            "<td>" + caozuo + "</td>"
+                        tr = "<tr>" + td + "</tr>";
+                        $("#userTable").append(tr);
+                    })
+                _item = data.item
+                _maxPage = Math.ceil(_item / _pageitem)
+                console.log("现在信息数:" + _item + "@最大页数::" + _maxPage)
+            }
+        })
+    }
+
+    function page_down_user() {
+        _limit += _pageitem
+        _page += 1
+        if (_page > _maxPage) {
+            alert("已经是最后一页！！！")
+            _page = _maxPage
+            _limit -= _pageitem
+        } else {
+            getUser(_limit, _pageitem)
+        }
+        console.log("sale点了下一页：" + _page)
+
+    }
+
+    function page_up_user() {
+        _limit -= _pageitem
+        _page -= 1
+        if (_page <= 0) {
+            _limit = 0;
+            _page = 1
+            alert("已经是第一页！")
+            return
+        }
+        console.log("sale点了上一页 现在页数为：" + _page)
+        getUser(_limit, _pageitem)
+    }
+    //点击修改用户
+    function changeUser(obj) {
+        _jiaoseName = $(obj).parent().prev().prev().text()
+        $("#myModalLabelUser").text("修改用户：" + _jiaoseName + "的权限")
+        _cuid = $(obj).parent().prev().prev().prev().text()
+
+    }
+    //提交修改用户
+    $("#goChangeUser").click(
+        function() {
+            $.ajax({
+                url: "/supermarketSSM/changeUser.do",
+                data: userChange = {
+                    uid: _cuid,
+                    cJiaoseid: $("#jiaoseOP option:selected").val()
+                },
+                type: "POST",
+                success: function(data) {
+
+                    alert(data)
+                        //刷新表格
+                    getUser(_limit, _pageitem)
+
+                },
+                error: function() {
+                    alert("用户修改 错误")
+                }
+            })
+        }
+    )
+
+    //删除用户
+
+    function delUser(obj) {
+        if (confirm("确定要删除用户：" + $(obj).parent().prev().prev().text() + "吗？")) {
+            $.ajax({
+                url: "/supermarketSSM/delUser.do",
+                data: {
+                    uid: $(obj).parent().prev().prev().prev().text()
+                },
+                type: "POST",
+                success: function(data) {
+                    alert(data)
+                    getUser(_limit, _pageitem)
+
+                },
+                error: function() {
+                    alert("用户删除 错误")
+                }
+            })
+        }
+    }
+</script>
+<!-- 用户js end -->
+
+</html>

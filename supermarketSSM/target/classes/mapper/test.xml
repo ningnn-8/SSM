@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 管理界面sql -->
+<mapper namespace="ssm.mapper.TestMapper">
+	<update id="testR" parameterType="ssm.entity.User">
+	<selectKey keyColumn="uid" keyProperty="uid" order="BEFORE"
+			resultType="string">
+			select UUID()
+		</selectKey>
+		insert into user values
+		(#{uid},#{username},#{password},1)
+	</update>
+</mapper>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 管理界面sql -->
+<mapper namespace="ssm.mapper.GuanLiMapper">
+	<!-- 映射goodsList -->
+	<resultMap type="ssm.entity.Goods" id="listGoods">
+		<!-- 用id属性来映射主键字段 -->
+		<id column="id" property="id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result column="gname" property="gname" />
+		<result column="price" property="price" />
+		<result column="stock" property="stock" />
+		<result column="sale" property="sale" />
+		<result column="cover" property="cover" />
+		<result column="tag" property="tag" />
+		<result column="expatite" property="expatite" />
+		<result column="isSale" property="isSale" />
+	</resultMap>
+	<!-- 映射orderList -->
+	<resultMap type="ssm.entity.Order" id="listOrder">
+		<id column="id" property="id" />
+		<result column="oname" property="oname" />
+		<result column="num" property="num" />
+		<result column="inPrice" property="inPrice" />
+		<result column="time" property="time" />
+		<result column="supply" property="supply" />
+	</resultMap>
+	<!-- 映射saleList -->
+	<resultMap type="ssm.entity.Sale" id="listSale">
+		<id column="id" property="id" />
+		<result column="userName" property="userName" />
+		<result column="goodsName" property="goodsName" />
+		<result column="goodsNum" property="goodsNum" />
+		<result column="goodsPrice" property="goodsPrice" />
+		<result column="time" property="time" />
+	</resultMap>
+	<!-- 映射SaleDetailsList -->
+	<resultMap type="ssm.entity.SaleDetails" id="listSaleDetails2">
+		<id column="id" property="id" />
+		<result column="saleID" property="saleID" />
+		<result column="goodsID" property="goodsID" />
+		<result column="buyNum" property="buyNum" />
+		<result column="price" property="price" />
+	</resultMap>
+	<!-- 映射userList -->
+	<resultMap type="ssm.entity.User" id="listUser">
+		<id column="uid" property="uid" />
+		<result column="username" property="username" />
+		<result column="password" property="password" />
+		<result column="jiaoseID" property="jiaoseid" />
+	</resultMap>
+	<!-- 动态查询商品 -->
+	<!-- 动态模糊查询 -->
+	<select id="getGoods" resultMap="listGoods"
+		parameterType="ssm.entity.Page">
+		select * from goods
+		<where>
+			<if test="tiaojian !=null and tiaojian !='' ">
+				CONCAT(IFNULL(`gname`,''),IFNULL(`tag`,''),IFNULL(`isSale`,''))
+				like CONCAT("%",CONCAT(#{tiaojian},"%"))
+			</if>
+		</where>
+		<if test="sort !=null and sort !='' ">
+			<if test="sort == 'priceUp'">
+				order by price
+			</if>
+			<if test="sort == 'priceDown'">
+				order by price DESC
+			</if>
+			<if test="sort == 'stockUp'">
+				order by stock
+			</if>
+			<if test="sort == 'stockDown'">
+				order by stock DESC
+			</if>
+			<if test="sort == 'saleUp'">
+				order by sale
+			</if>
+			<if test="sort == 'saleDown'">
+				order by sale DESC
+			</if>
+		</if>
+		limit #{limit},#{pageItem}
+	</select>
+	<!-- 查询商品总数 分页用 -->
+	<select id="getGoodsNum" resultType="int"
+		parameterType="ssm.entity.Page">
+		select count(*) from goods
+		<where>
+			<if test="tiaojian !=null and tiaojian !='' ">
+				CONCAT(`gname`,`tag`,`isSale`)
+				like CONCAT("%",CONCAT(#{tiaojian},"%"))
+			</if>
+		</where>
+	</select>
+	<!-- findGoodsByID id查找商品 -->
+	<select id="findGoodsByID" resultType="ssm.entity.Goods"
+		parameterType="String">
+		select * from goods where id = #{goodsid}
+	</select>
+	<!-- 查找商品 -->
+	<select id="checkGoods" resultType="ssm.entity.Goods"
+		parameterType="ssm.entity.Goods">
+		select * from goods where gname = #{gname}
+	</select>
+	<!-- 查找商品byID -->
+	<select id="checkGoodsByID" resultType="ssm.entity.Goods"
+		parameterType="string">
+		select * from goods where id = #{id}
+	</select>
+	<!-- 添加商品 -->
+	<insert id="addGoods" parameterType="ssm.entity.Goods">
+	<selectKey keyColumn="id" keyProperty="id" order="BEFORE"
+			resultType="string">
+			select UUID()
+		</selectKey>
+		insert into goods
+		(id,gname,price,stock,sale,cover,tag,expatiate,isSale) values
+		(#{id},#{gname},#{price},#{stock},#{sale},#{cover},#{tag},#{expatiate},#{isSale})
+	</insert>
+	<!-- 删除商品 -->
+	<delete id="delGoods" parameterType="String">
+		delete from goods where
+		id = #{goodsid}
+	</delete>
+	<!-- 修改商品 -->
+	<update id="changeGoods" parameterType="ssm.entity.GoodsChange">
+		update goods
+		<!-- suffixOverrides 去除多余后缀 -->
+		<trim prefix="set" suffixOverrides=" , ">
+			<if test="cGname != null and cGname !=''">gname = #{cGname},</if>
+			<if test="cPrice != null and cPrice !=''">price = #{cPrice},</if>
+			<if test="cStock != null and cStock !=''">stock = #{cStock},</if>
+			<if test="cSale != null and cSale !=''">sale = #{cSale},</if>
+			<if test="cTag != null and cTag !=''">tag = #{cTag},</if>
+			<if test="cExpatiate != null and cExpatiate !=''">expatiate = #{cExpatiate},</if>
+			<if test="cCover != null and cCover !=''">cover = #{cCover},</if>
+		</trim>
+		where id = #{id}
+	</update>
+	<!-- 得到进货信息 -->
+	<select id="getOrder" resultMap="listOrder"
+		parameterType="ssm.entity.Page">
+		select * from dingdan
+		<where>
+			<if test="tiaojian !=null and tiaojian !='' ">
+				CONCAT(IFNULL(`oname`,''),IFNULL(`num`,''),IFNULL(`inPrice`,''),IFNULL(`time`,''),IFNULL(`supply`,''))
+				like CONCAT("%",CONCAT(#{tiaojian},"%"))
+			</if>
+		</where>
+		<if test="sort !=null and sort !='' ">
+			<if test="sort == 'numUp'">
+				order by num
+			</if>
+			<if test="sort == 'numDown'">
+				order by num DESC
+			</if>
+			<if test="sort == 'inPriceUp'">
+				order by inPrice
+			</if>
+			<if test="sort == 'inPriceDown'">
+				order by inPrice DESC
+			</if>
+			<if test="sort == 'timeUp'">
+				order by time
+			</if>
+			<if test="sort == 'timeDown'">
+				order by time DESC
+			</if>
+		</if>
+		limit #{limit},#{pageItem}
+	</select>
+	<!-- 查询进货信息总数 分页用 -->
+	<select id="getOrderNum" resultType="int"
+		parameterType="ssm.entity.Page">
+		select count(*) from dingdan
+		<where>
+			<if test="tiaojian !=null and tiaojian !='' ">
+				CONCAT(IFNULL(`oname`,''),IFNULL(`num`,''),IFNULL(`inPrice`,''),IFNULL(`time`,''),IFNULL(`supply`,''))
+				like CONCAT("%",CONCAT(#{tiaojian},"%"))
+			</if>
+		</where>
+	</select>
+	<!-- 删除订单信息 -->
+	<delete id="delOrder" parameterType="String">
+		delete from dingdan where
+		id
+		= #{id}
+	</delete>
+	<!-- 添加订单信息 -->
+	<insert id="addOrder" parameterType="ssm.entity.Order">
+		insert into dingdan
+		(oname,num,inPrice,time,supply) values
+		(#{oname},#{num},#{inPrice},#{time},#{supply})
+	</insert>
+	<!-- 得到销售信息 -->
+	<select id="getSale" resultMap="listSale"
+		parameterType="ssm.entity.Page">
+		select * from sale
+		<where>
+			<if test="tiaojian !=null and tiaojian !='' ">
+				type = #{tiaojian}
+			</if>
+		</where>
+		order by time desc limit #{limit},#{pageItem}
+	</select>
+	<select id="getSaleNum" resultType="int"
+		parameterType="ssm.entity.Page">
+		select count(*) from sale
+		<where>
+			<if test="tiaojian !=null and tiaojian !='' ">
+				type = #{tiaojian}
+			</if>
+		</where>
+	</select>
+	<!-- 更新订单快递信息 -->
+	<update id="setCode" parameterType="ssm.entity.GoodsChange">
+		update sale set code = #{code} , type = '待收货' where id = #{saleID}
+	</update>
+	<!-- 得到用户信息 -->
+	<select id="getUser" resultMap="listUser"
+		parameterType="ssm.entity.Page">
+		select * from user
+		limit #{limit},#{pageItem}
+	</select>
+
+	<!-- 查询销售信息总数 分页用 -->
+	<!-- id找用户 -->
+	<select id="findUserByID" resultType="ssm.entity.User"
+		parameterType="string">
+		select * from user where uid = #{uid}
+	</select>
+	<select id="getUserNum" resultType="int"
+		parameterType="ssm.entity.Page">
+		select count(*) from user
+		<where>
+			<if test="tiaojian !=null and tiaojian !='' ">
+				CONCAT(IFNULL(`userName`,''),IFNULL(`goodsName`,''),IFNULL(`goodsNum`,''),IFNULL(`goodsPrice`,''),IFNULL(`time`,''))
+				like CONCAT("%",CONCAT(#{tiaojian},"%"))
+			</if>
+		</where>
+	</select>
+	<!-- 修改用户 -->
+	<update id="changeUser" parameterType="ssm.entity.UserChange">
+		update user
+		<!-- suffixOverrides 去除多余后缀 -->
+		<trim prefix="set" suffixOverrides=" , ">
+			<if test="cUserName != null and cUserName !=''">username = #{cUserName},</if>
+			<if test="cPassword != null and cPassword !=''">password = #{cPassword},</if>
+			<if test="cJiaoseid != null and cJiaoseid !=''">jiaoseid = #{cJiaoseid},</if>
+		</trim>
+		where uid = #{uid}
+	</update>
+	<!-- 删除用户 -->
+	<delete id="delUser" parameterType="String">
+		delete from user where uid= #{uid}
+	</delete>
+	<!-- 找一个商品 -->
+	<select id="findGoods" resultType="ssm.entity.Goods"
+		parameterType="String">
+		select * from goods where id = #{id}
+	</select>
+	<!-- 修改商品上架为是 -->
+	<update id="setIsSaleYes" parameterType="String">
+		update goods set isSale = '是' where id = #{id}
+	</update>
+	<!-- 修改商品上架为否 -->
+	<update id="setIsSaleNo" parameterType="String">
+		update goods set isSale = '否' where gname = #{gname}
+	</update>
+	
+	<!-- 根据saleID找saledetails -->
+	<select id="findSaleDetails" resultMap="listSaleDetails2"
+		parameterType="String">
+		select * from saledetails where saleID = #{saleID}
+	</select>
+</mapper>

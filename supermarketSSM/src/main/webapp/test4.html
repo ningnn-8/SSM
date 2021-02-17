@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="application/x-javascript" src="js/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+    <select id="select">
+    </select>
+    <select id="selectSon">
+    </select>
+
+</body>
+<script>
+    $(function() {
+        $("#select").css({
+            "font-size": "25px",
+            "font-weight": "bolds",
+            "color": "#bcf"
+        })
+    })
+    $(document).ready(
+        function() {
+            $.ajax({
+                url: "http://192.168.6.44:8089/quickSearchController/hwClazzes",
+                type: "post",
+                success: function(data) {
+                    $.each(data, function(index, obj) {
+                        $("#select").append("<option value='" + obj.id + "'>" + obj.clazzName + "</option>")
+                    })
+                }
+            })
+        }
+    )
+    var obj = {
+        "1": ["java20stu1", "java20stu2", "java20stu3", "java20stu4"],
+        "2": ["java19stu1", "java19stu2", "java19stu3", "java19stu4"]
+    }
+    $("#select").change(
+        function() {
+            var key = this.value
+            console.log(key)
+            $("#selectSon").empty()
+            $.each(obj, function(index, arr) {
+                if (index == key) {
+                    $.each(arr, function(k, v) {
+                        $("#selectSon").append("<option >" + v + "</option>")
+                    })
+                }
+            })
+        }
+    )
+</script>
+
+</html>

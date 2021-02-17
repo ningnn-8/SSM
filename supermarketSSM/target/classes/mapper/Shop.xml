@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 购物界面sql -->
+<mapper namespace="ssm.mapper.ShopMapper">
+	<!-- 映射saleGoodsList -->
+	<resultMap type="ssm.entity.Goods" id="listSaleGoods">
+		<!-- 用id属性来映射主键字段 -->
+		<id column="id" property="id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result column="gname" property="gname" />
+		<result column="price" property="price" />
+		<result column="stock" property="stock" />
+		<result column="sale" property="sale" />
+		<result column="cover" property="cover" />
+		<result column="isSale" property="isSale" />
+	</resultMap>
+	<!-- 映射addressList -->
+	<resultMap type="ssm.entity.Address" id="listAddress">
+		<!-- 用id属性来映射主键字段 -->
+		<id column="addressID" property="addressID" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result column="userid" property="userid" />
+		<result column="addressName" property="addressName" />
+		<result column="area" property="area" />
+		<result column="address" property="address" />
+		<result column="phone" property="phone" />
+		<result column="tag" property="tag" />
+	</resultMap>
+	<!-- 映射SaleList -->
+	<resultMap type="ssm.entity.Sale" id="listSale">
+		<id column="id" property="id" />
+		<result column="userID" property="userID" />
+		<result column="addressID" property="addressID" />
+		<result column="time" property="time" />
+		<result column="type" property="type" />
+		<result column="code" property="code" />
+	</resultMap>
+	<!-- 映射SaleDetailsList -->
+	<resultMap type="ssm.entity.SaleDetails" id="listSaleDetails">
+		<id column="id" property="id" />
+		<result column="saleID" property="saleID" />
+		<result column="goodsID" property="goodsID" />
+		<result column="buyNum" property="buyNum" />
+		<result column="price" property="price" />
+	</resultMap>
+	<!-- 映射购物车信息list -->
+	<resultMap type="ssm.entity.ShopcarShow" id="listShopcarShow">
+		<!-- 用id属性来映射主键字段 -->
+		<id column="goodsid" property="goodsid" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result column="gname" property="goodsName" />
+		<result column="goodsNum" property="goodsNum" />
+		<result column="price" property="goodsPrice" />
+		<result column="cover" property="cover" />
+	</resultMap>
+	<select id="getSaleGoods" resultMap="listSaleGoods"
+		parameterType="string">
+		select * from goods g WHERE g.tag like #{tag} and
+		g.isSale = '是' order by rand() limit 8;
+	</select>
+	<select id="findGoods" resultType="ssm.entity.Goods"
+		parameterType="string">
+		select * from goods WHERE id = #{goodsID}
+	</select>
+	<!-- 购物车 shopcar -->
+	<!-- 查找购物车记录 -->
+	<select id="checkShopcar" resultType="ssm.entity.Shopcar"
+		parameterType="ssm.entity.Shopcar">
+		select * from shopcar where userid = #{userid} and
+		goodsid = #{goodsid}
+	</select>
+	<!-- 添加购物车记录 -->
+	<insert id="addShopcar" parameterType="ssm.entity.Shopcar">
+		<!-- 生成UUID -->
+		<selectKey keyColumn="id" keyProperty="id" order="BEFORE"
+			resultType="string">
+			select UUID()
+		</selectKey>
+		insert into shopcar values
+		(#{id},#{userid},#{goodsid},#{goodsNum})
+	</insert>
+	<!-- 更新购物车记录的商品数量 -->
+	<update id="updateShopcarNum" parameterType="ssm.entity.Shopcar">
+		update shopcar set
+		goodsNum = #{goodsNum} where userid = #{userid} and goodsid =
+		#{goodsid}
+	</update>
+	<!-- 得到购物车记录信息 -->
+	<select id="getShopcar" resultMap="listShopcarShow"
+		parameterType="ssm.entity.Shopcar">
+		select * from shopcar left join goods on shopcar.goodsid
+		= goods.id and shopcar.userid = #{userid}
+	</select>
+	<!-- 删除购物车记录 -->
+	<delete id="delShopcar" parameterType="ssm.entity.Shopcar">
+		delete from shopcar where
+		userid= #{userid} and goodsid = #{goodsid}
+	</delete>
+	<!-- 批量删除购物车记录 -->
+	<delete id="delShopcarToList" parameterType="list">
+		delete from shopcar where userid = #{userid} and goodsid in
+		<foreach collection="list" open="(" item="item" close=")"
+			separator=",">#{item.goodsid}</foreach>
+	</delete>
+	<!-- 购物车 shopcar End -->
+	<!-- 地址Address -->
+	<!-- 查看地址数量 checkAddressNum -->
+	<select id="checkAddressNum" resultType="int"
+		parameterType="ssm.entity.Address">
+		select count(*) from address where userid =
+		#{userid}
+	</select>
+	<!-- 添加用户收货地址 addAddress -->
+	<insert id="addAddress" parameterType="ssm.entity.Address">
+		<!-- 生成UUID -->
+		<selectKey keyColumn="addressID" keyProperty="addressID"
+			order="BEFORE" resultType="string">
+			select UUID()
+		</selectKey>
+		insert into address values
+		(#{addressID},#{userid},#{addressName},#{area},#{address},#{phone},#{tag})
+	</insert>
+	<!-- 得到收货地址信息 getAddress -->
+	<select id="getAddress" resultMap="listAddress"
+		parameterType="String">
+		select * from address where userid = #{userid}
+	</select>
+	<!-- 得到收货地址信息byid getAddressByID -->
+	<select id="getAddressByID" resultType="ssm.entity.Address"
+		parameterType="String">
+		select * from address where addressID = #{addressID}
+	</select>
+	<!-- getaddressByaddressIDList idList查找 -->
+	<select id="getaddressByaddressIDList" resultMap="listAddress">
+		select * from address where addressID in
+		<foreach collection="list" item="addressID" index="index"
+			open="(" close=")" separator=",">
+			#{addressID}
+		</foreach>
+	</select>
+	<!-- 删除地址 -->
+	<delete id="delAddress" parameterType="String">
+		delete from
+		address where addressID = #{addressID}
+	</delete>
+	<!-- 地址Address End -->
+
+	<!-- 订单sale -->
+	<!-- 添加订单 -->
+	<insert id="addSale" parameterType="ssm.entity.Sale">
+		<selectKey keyColumn="id" keyProperty="id" order="BEFORE"
+			resultType="string">
+			select UUID()
+		</selectKey>
+		insert into sale values
+		(#{id},#{userID},#{addressID},now(),'待发货','')
+	</insert>
+	<!-- 批量添加订单详细 -->
+	<insert id="addSaleDetails">
+		INSERT INTO saledetails VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			((select replace(uuid(), '-', '') as id),
+			#{item.saleID},#{item.goodsID},#{item.buyNum},#{item.price})
+		</foreach>
+	</insert>
+	<!-- 通过id用户的订单getUserSaleByID -->
+	<select id="getUserSaleByID" resultMap="listSale"
+		parameterType="String">
+		select * from sale where userid = #{userid}
+		<if
+			test="tiaojian !=null and tiaojian !='' and tiaojian =='待处理'   ">
+			and type not like '已收货'
+		</if>
+		<if test="tiaojian !=null and tiaojian !='' and tiaojian =='已收货'  ">
+			and type like '已收货'
+		</if>
+		order by time desc
+	</select>
+	<select id="getSaleDetailsBySaleID" resultMap="listSaleDetails"
+		parameterType="String">
+		select * from saledetails where saleID = #{saleID}
+	</select>
+	<!-- getGoodsBygoodsIDList -->
+	<select id="getGoodsBygoodsIDList" resultMap="listSaleGoods">
+		select * from goods where id in
+		<foreach collection="list" item="goodsid" index="index"
+			open="(" close=")" separator=",">
+			#{goodsid}
+		</foreach>
+	</select>
+	<!-- delSaleDetails -->
+	<delete id="delSaleDetails" parameterType="String">
+		delete from
+		saledetails where saleID = #{saleID}
+	</delete>
+	<!-- delSale -->
+	<delete id="delSale" parameterType="String">
+		delete from sale where id =
+		#{saleID}
+	</delete>
+	<!-- saveSale -->
+	<update id="saveSale" parameterType="ssm.entity.Shopcar">
+		update sale set
+		type = '已收货'
+		where id = #{saleID}
+	</update>
+	<!-- 订单sale End -->
+</mapper>

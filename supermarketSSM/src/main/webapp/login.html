@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" href="css/loginCSS.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script type="application/x-javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="application/x-javascript" src="js/bootstrap.js"></script>
+    <!--支持响应式布局 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .column {
+            background-color: #f3f3f3;
+        }
+        
+        .login {
+            border-radius: 6px;
+            border-bottom-right-radius: 18px;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- 新布局  -->
+    <div class="login">
+        <div class="form">
+            <div class="col-md-12 column">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">账号</label><input type="email" class="form-control" id="name" autocomplete="off" />
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">密码</label><input type="password" class="form-control" id="pwd" />
+                </div>
+                <div class="checkbox">
+                    <span id="loginMsg" style="color: red;">*</span>
+                </div>
+                <button type="button" class="btn btn-block btn-default btn-success" style="margin-bottom: 3px;" id="goLogin">登录</button>
+                <button type="button" class="btn btn-warning" id="modal-41376" href="#modal-container-41376" data-toggle="modal" style="float: right;">注册账号</button>
+                <button type="button" class="btn btn-warning" id="modal-765" href="#modal-container-765" data-toggle="modal" style="float: right; margin-right: 3px;">忘记密码？</button>
+            </div>
+            <!-- 弹出注册账号 -->
+            <div class="modal fade" id="modal-container-41376" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                注册账号
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">账号：</label><input type="text" class="form-control" id="regName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">电话号码：</label><input type="text" class="form-control passwordAgainInput" id="regPhone" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">密码：</label><input type="password" class="form-control" id="regPwd" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">确认密码：</label><input type="password" class="form-control passwordAgainInput" id="regPwdAgain" />
+                            </div>
+                            <div class="form-group">
+                                <span id="RegMsg" style="color: red;">*</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary" id="goReg">确认注册</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- 弹出注册账号 end -->
+            <!-- 弹出找回密码 -->
+            <div class="modal fade" id="modal-container-765" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                找回密码
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">账号电话号码：</label><input type="text" class="form-control" id="findPwdPhone" />
+                            </div>
+                            <div id="phoneYes" style="display: none;">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">输入新密码：</label><input type="password" class="form-control" id="findPwdPassword" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">确认新密码：</label><input type="password" class="form-control passwordAgainInput" id="findPwdPasswordAgain" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span id="Msg" style="color: red;">*</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="goFindPwd">确认找回</button>
+                            <button type="button" class="btn btn-primary" id="checkPhone">确认</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- 弹出找回密码 -->
+        </div>
+        <!-- 新布局 end -->
+    </div>
+    <script src="js/logAndReg.js" type="text/javascript" charset="utf-8"></script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+*,
+ :after,
+ :before {
+    box-sizing: border-box;
+    color: #333;
+    padding: 0px;
+    margin: 0px;
+}
+
+.area-entrance {
+    width: 427px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.area-header {
+    font-size: 0px;
+}
+
+.area-header-tips {
+    display: inline-block;
+    padding-right: 12px;
+    color: #333;
+    width: 78px;
+    line-height: 30px;
+    vertical-align: top;
+    font-size: 12px;
+}
+
+.area-header-tips:before {
+    margin-right: 4px;
+    content: "*";
+    color: #ff3000;
+}
+
+.area-header-click {
+    display: inline-block;
+    position: relative;
+    width: 336px;
+    /*min-height: 28px;*/
+    /*vertical-align: middle;*/
+    line-height: 28px;
+    padding: 0px 8px;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+}
+
+.area-header-click:hover {
+    cursor: pointer;
+}
+
+.placeholder {
+    color: #999;
+}
+
+.area-header-click-input {
+    display: inline-block;
+    width: 318px;
+    /*height: 28px;*/
+    line-height: 28px;
+    vertical-align: top;
+    font-size: 12px;
+    /*overflow: visible;*/
+    min-height: 28px;
+}
+
+.area-input-name {
+    display: inline-block;
+    margin: -2px 5px;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.area-input-symbol {
+    /*vertical-align: top;*/
+}
+
+.area-header-click-icon {
+    background: url(img/down.png) no-repeat center right;
+    display: inline-block;
+    width: 11px;
+    height: 6px;
+    position: absolute;
+    top: 10px;
+    right: 8px;
+}
+
+.area-box {
+    display: none;
+    border: 1px solid #CCCCCC;
+}
+
+.area-box-title ul {
+    display: flex;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    height: 30px;
+    border-bottom: 1px solid #ccc;
+}
+
+.area-box-title ul li {
+    width: 25%;
+    /*flex: 1;*/
+    float: left;
+    height: 29px;
+    line-height: 29px;
+    text-align: center;
+    background-color: #F0F0F0;
+}
+
+.area-box-title .area-box-title-current {
+    background-color: #FFF;
+}
+
+.area-box-title ul li:hover {
+    cursor: pointer;
+}
+
+.area-box-content-panel {
+    display: none;
+}
+
+.area-box-content-visible {
+    display: block;
+}
+
+.area-box-content-panel ul {
+    height: 320px;
+    list-style: none;
+    padding: 0px;
+    overflow: auto;
+    margin: 5px 10px;
+}
+
+.area-box-content-list li {
+    padding: 10px 5px;
+}
+
+.area-box-content-list li:hover {
+    color: #4a8cff;
+}
+
+.area-current {
+    color: #4a8cff;
+    font-weight: 700;
+}
